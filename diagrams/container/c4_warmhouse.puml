@@ -1,0 +1,40 @@
+@startuml WarmHouse_containers
+
+title WarmHouse updated system containers
+
+top to bottom direction
+
+'!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+!include <C4/C4_Component.puml>
+
+Person(user, "User", "A user of a WarmHouse system")
+System(WarmHouseSystem, "WarmHouse system", "System managing smart devices")
+
+Container_Boundary(WarmHouseSystem, "WarmHouse system") {
+    Container(WebApp, "Web application", "Go", "Handles user interactions")
+    Container(Database, "PostgreSQL", "Stores user data and device configuration")
+    Container(TemperatureService, "Heating service", "Go", "Interact with heating devices")
+    Container(CameraService, "Camera service", "Go", "Interact with camera")
+    Container(DoorService, "Door service", "Go", "Interact with doors")
+    Container(LightService, "Light service", "Go", "Interact with lights")
+    
+}
+
+System_Ext(TemperatureDev, "Heating manager", "Control heating, read temperature")
+System_Ext(Camera, "Camera", "Translate video")
+System_Ext(Doors, "Door manager", "Open/close the door")
+System_Ext(LightDev, "Light manager", "Turn on/off the light")
+
+Rel(user, WebApp, "Uses the system")
+Rel_L(WebApp, Database, "Reads/writes data")
+Rel(WebApp, TemperatureService, "Uses microfrontend")
+Rel(WebApp, CameraService, "Uses microfrontend")
+Rel(WebApp, DoorService, "Uses microfrontend")
+Rel(WebApp, LightService, "Uses microfrontend")
+
+Rel(TemperatureService, TemperatureDev, "Interact via API")
+Rel(LightService, LightDev, "Interact via API")
+Rel(CameraService, Camera, "Interact via API")
+Rel(DoorService, Doors, "Interact via API")
+
+@enduml

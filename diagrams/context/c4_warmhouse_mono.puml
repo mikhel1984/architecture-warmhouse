@@ -1,4 +1,5 @@
-@startuml
+@startuml WarmHouse_context
+
 title WarmHouse monolithic context diagram 
 
 top to bottom direction
