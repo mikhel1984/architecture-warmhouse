@@ -1,4 +1,4 @@
-@startuml WarmHouse_component_door
+@startuml WarmHouse_component_light
 
 title Light service component
 
