@@ -11,7 +11,7 @@ Person(user, "User", "A user of a WarmHouse system")
 System(WarmHouseSystem, "WarmHouse system", "System managing smart devices")
 
 Container_Boundary(WarmHouseSystem, "WarmHouse system") {
-    Container(WebApp, "Web application", "Go", "Handles user interactions")
+    Container(WebApp, "Web application", "Java", "Handles user interactions")
     Container(Database, "PostgreSQL", "Stores user data and device configuration")
     Container(TemperatureService, "Heating service", "Go", "Interact with heating devices")
     Container(CameraService, "Camera service", "Go", "Interact with camera")
@@ -20,10 +20,10 @@ Container_Boundary(WarmHouseSystem, "WarmHouse system") {
     
 }
 
-System_Ext(TemperatureDev, "Heating manager", "Control heating, read temperature")
+System_Ext(TemperatureDev, "Heating system", "Control heating, read temperature")
 System_Ext(Camera, "Camera", "Translate video")
-System_Ext(Doors, "Door manager", "Open/close the door")
-System_Ext(LightDev, "Light manager", "Turn on/off the light")
+System_Ext(Doors, "Door system", "Open/close the door")
+System_Ext(LightDev, "Light system", "Turn on/off the light")
 
 Rel(user, WebApp, "Uses the system")
 Rel_L(WebApp, Database, "Reads/writes data")

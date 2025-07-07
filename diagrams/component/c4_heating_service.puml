@@ -7,7 +7,7 @@ top to bottom direction
 !includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
 
 Container_Boundary(WarmHouseSystem, "WarmHouse system") {
-    Container(WebApp, "Web application", "Go", "Handles user interactions")
+    Container(WebApp, "Web application", "Java", "Handles user interactions")
     Container(TemperatureService, "Heating service", "Go", "Interact with heating devices")
 }
 
