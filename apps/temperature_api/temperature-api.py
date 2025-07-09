@@ -10,6 +10,9 @@ def read_root():
 @app.get("/temperature")
 def read_temperature(location: str=Query(..., desctiption="Sensor location")):
     tmin, tmax = 0.0, 42.0
-    return {
-        "temperature": "{:.1f}".format(tmin + (tmax-tmin)*random.random()),
-        "location": location}
+    return {"value": "{:.2f}".format(tmin + (tmax-tmin)*random.random())}
+
+@app.get("/temperature/{id}")
+def read_id_temperature(id: int):
+    tmin, tmax = 0.0, 42.0
+    return {"value": tmin + (tmax-tmin)*random.random()}
