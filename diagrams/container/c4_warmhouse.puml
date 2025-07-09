@@ -32,9 +32,9 @@ Rel(WebApp, CameraService, "Uses microfrontend")
 Rel(WebApp, DoorService, "Uses microfrontend")
 Rel(WebApp, LightService, "Uses microfrontend")
 
-Rel(TemperatureService, TemperatureDev, "Interact via API")
-Rel(LightService, LightDev, "Interact via API")
-Rel(CameraService, Camera, "Interact via API")
-Rel(DoorService, Doors, "Interact via API")
+Rel(TemperatureService, TemperatureDev, "Interact MQTT")
+Rel(LightService, LightDev, "Interact MQTT")
+Rel(CameraService, Camera, "Interact MQTT")
+Rel(DoorService, Doors, "Interact MQTT")
 
 @enduml

@@ -87,7 +87,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/DeviceInfo'
   /device/{typeId}/{address}:
-    get:
+    post:
       tags:
         - device
       summary: Make microfnotnend
@@ -149,8 +149,8 @@ paths:
     post:
       tags:
         - device
-      summary: Get measurements
-      description: Get measurements
+      summary: Change device state
+      description: Change device state
       parameters:
         - name: typeId
           in: path
