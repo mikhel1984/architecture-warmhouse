@@ -12,12 +12,12 @@ System(WarmHouseSystem, "WarmHouse system", "System managing smart devices")
 
 Container_Boundary(WarmHouseSystem, "WarmHouse system") {
     Container(WebApp, "Web application", "Java", "Handles user interactions")
-    Container(Database, "PostgreSQL", "Stores user data and device configuration")
+    ContainerDb(Database, "PostgreSQL", "Stores user data and device configuration")
     Container(TemperatureService, "Heating service", "Go", "Interact with heating devices")
     Container(CameraService, "Camera service", "Go", "Interact with camera")
     Container(DoorService, "Door service", "Go", "Interact with doors")
     Container(LightService, "Light service", "Go", "Interact with lights")
-    
+    Container(Getway, "Getway API")
 }
 
 System_Ext(TemperatureDev, "Heating system", "Control heating, read temperature")
@@ -27,14 +27,15 @@ System_Ext(LightDev, "Light system", "Turn on/off the light")
 
 Rel(user, WebApp, "Uses the system")
 Rel_L(WebApp, Database, "Reads/writes data")
-Rel(WebApp, TemperatureService, "Uses microfrontend")
-Rel(WebApp, CameraService, "Uses microfrontend")
-Rel(WebApp, DoorService, "Uses microfrontend")
-Rel(WebApp, LightService, "Uses microfrontend")
+Rel(WebApp, Getway, "Communicate sensors")
+Rel(Getway, TemperatureService, "Communicate with heating")
+Rel(Getway, CameraService, "Communicate with camera")
+Rel(Getway, DoorService, "Comminucate with doors")
+Rel(Getway, LightService, "Communicate with lights")
 
-Rel(TemperatureService, TemperatureDev, "Interact MQTT")
-Rel(LightService, LightDev, "Interact MQTT")
-Rel(CameraService, Camera, "Interact MQTT")
-Rel(DoorService, Doors, "Interact MQTT")
+Rel(TemperatureService, TemperatureDev, "Interact API")
+Rel(LightService, LightDev, "Interact API")
+Rel(CameraService, Camera, "Interact API")
+Rel(DoorService, Doors, "Interact API")
 
 @enduml
