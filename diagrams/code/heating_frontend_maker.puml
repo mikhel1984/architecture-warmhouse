@@ -1,0 +1,11 @@
+@startuml heating_frontend_maker
+
+title Heating service frontend maker
+
+class FrontendMaker {
+    - Socket server
+
+    + void run()
+}
+
+@enduml

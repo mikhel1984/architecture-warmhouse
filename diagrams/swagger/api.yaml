@@ -1,0 +1,225 @@
+openapi: 3.0.4
+info:
+  title: Warm House - OpenAPI 3.0
+  description: |-
+    Warm House API documentation
+  version: 1.0.0
+tags:
+  - name: user
+    description: Operations about user
+  - name: device
+    description: Operations with devices
+paths:
+  /user/login:
+    get:
+      tags:
+        - user
+      summary: Logs user into the system.
+      description: Log into the system.
+      operationId: loginUser
+      parameters:
+        - name: username
+          in: query
+          description: The user name for login
+          required: false
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: The password for login in clear text
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid username/password supplied
+  /user/{username}/device:
+    get:
+      tags:
+        - user
+      summary: Get registered devices.
+      description: Get list of the user devices.
+      parameters:
+        - name: username
+          in: path
+          description: The name that needs to be fetched. Use user1 for testing
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceList'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/DeviceList'
+        '400':
+          description: Invalid username supplied
+        '404':
+          description: User not found
+  /device/{deviceId}:
+    get:
+      tags:
+        - device
+      summary: Device info
+      description: Get device type and address
+      parameters:
+        - name: deviceId
+          in: path
+          description: Device index.
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceInfo'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/DeviceInfo'
+  /device/{typeId}/{address}:
+    post:
+      tags:
+        - device
+      summary: Make microfnotnend
+      description: Make microfnotnend, connect to device
+      parameters:
+        - name: typeId
+          in: path
+          description: Type index for device (defines type of device and protocol for communication).
+          required: true
+          schema:
+            type: integer
+        - name: address
+          in: path
+          description: Device address.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: error in connection
+        '404':
+          description: device not found
+  /device/{typeId}/{address}/telemetry:
+    get:
+      tags:
+        - device
+      summary: Get measurements
+      description: Get measurements
+      parameters:
+        - name: typeId
+          in: path
+          description: Type index for device (defines type of device and protocol for communication).
+          required: true
+          schema:
+            type: integer
+        - name: address
+          in: path
+          description: Device address.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Telemetry'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Telemetry'
+        '400':
+          description: error in connection
+        '404':
+          description: device not found
+  /device/{typeId}/{address}/{command}:
+    post:
+      tags:
+        - device
+      summary: Change device state
+      description: Change device state
+      parameters:
+        - name: typeId
+          in: path
+          description: Type index for device (defines type of device and protocol for communication).
+          required: true
+          schema:
+            type: integer
+        - name: address
+          in: path
+          description: Device address.
+          required: true
+          schema:
+            type: string
+        - name: command
+          in: path
+          description: Command to change state (on/off)
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: error in connection
+        '404':
+          description: device not found
+
+
+components:
+  schemas:
+    DeviceList:
+      type: object
+      properties:
+        user_id:
+          type: integer
+          format: int64
+          example: 10
+        devices:
+          type: array
+          xml:
+            wrapped: true
+          items:
+            type: integer
+            format: int64
+            example: [42, 15]
+      xml:
+        name: deviceList
+    DeviceInfo:
+      type: object
+      properties:
+        type_id:
+          type: integer
+          format: int32
+          example: 2
+        address:
+          type: string
+          example: "140.164.98.11"
+      xml:
+        name: deviceInfo
+    Telemetry:
+      type: object
+      properties:
+        time:
+          type: integer
+          format: int64
+          example: 1751648963
+        value:
+          type: number
+          example: 22.1
+      xml:
+        name: telemetry
+ 

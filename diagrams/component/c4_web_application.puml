@@ -1,0 +1,42 @@
+@startuml WarmHouse_component_web
+
+title Web application
+
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+Container_Boundary(WarmHouseSystem, "WarmHouse system") {
+    Container(WebApp, "Web application", "Java", "Handles user interactions")
+    ContainerDb(Database, "PostgreSQL", "Stores user data and device configuration")
+    Container(TemperatureService, "Heating service", "Go", "Interact with heating devices")
+    Container(CameraService, "Camera service", "Go", "Interact with camera")
+    Container(DoorService, "Door service", "Go", "Interact with doors")
+    Container(LightService, "Light service", "Go", "Interact with lights")
+ 
+}
+
+Container(WebApp, "Web application", "Go") {
+    Component(UserController, "UserController", "Manages user profiles")
+    Component(AuthController, "AuthController", "Handles authorization and autentification")
+    Component(DeviceController, "DeviceController", "Handles device registration")
+    Component(ServiceLayer, "Service Layer", "Buisness logic")
+    Component(RepositoryLayer, "Repository Layer", "Data access logic")
+    
+}
+
+Rel(UserController, ServiceLayer, "Calls buisness logic")
+Rel(AuthController, ServiceLayer, "Calls buisness logic")
+Rel(DeviceController, ServiceLayer, "Calls buisness logic")
+Rel_L(ServiceLayer, RepositoryLayer, "Reads/writes data")
+
+Rel(ServiceLayer, TemperatureService, "Integrate microfrontend")
+Rel(ServiceLayer, CameraService, "Integrate microfrontend")
+Rel(ServiceLayer, DoorService, "Integrate microfrontend")
+Rel(ServiceLayer, LightService, "Integrate microfrontend")
+
+Rel_L(RepositoryLayer, Database, "Reads/writes data")
+
+
+
+@enduml

@@ -1,0 +1,23 @@
+@startuml heating_device_controller
+
+title Heating service device controller
+
+class DeviceController {
+    - Socket connection 
+    - Encoder encoder
+
+    + bool connect(String addres, uint16 port) 
+    + float getTemperature()
+    + bool activateHeating(bool activate)
+}
+
+class Encoder {
+    +char[] cmdOn()
+    +char[] cmdOff()
+    +char[] cmdGetTemperature()
+    +float parseFloat(char[] response)
+}
+
+DeviceController "1" -- "1" Encoder : has
+
+@enduml

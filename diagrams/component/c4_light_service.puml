@@ -1,0 +1,25 @@
+@startuml WarmHouse_component_light
+
+title Light service component
+
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+Container_Boundary(WarmHouseSystem, "WarmHouse system") {
+    Container(WebApp, "Web application", "Java", "Handles user interactions")
+    Container(LightService, "Light service", "Go", "Interact with lights")
+}
+
+Container(LightService, "Light service", "Go") {
+    Component(FrontMaker, "FrontendMaker", "Generate microfrontend")
+    Component(DeviceController, "DeviceController", "Communicates with device")
+    Component(ScheduleController, "ScheduleController", "Execute user's program")
+}
+
+Rel(WebApp, FrontMaker, "Call buisness logic")
+Rel(FrontMaker, DeviceController, "Read/write data")
+Rel(FrontMaker, ScheduleController, "Configure schedule")
+Rel(ScheduleController, DeviceController, "Send commands")
+
+@enduml

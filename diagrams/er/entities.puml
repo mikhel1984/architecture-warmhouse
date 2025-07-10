@@ -1,0 +1,46 @@
+@startuml ER_diagram
+
+title WarmHouse system entities
+
+entity User {
+    id
+    username
+    password
+    
+}
+
+entity House {
+    id
+    user_id: User
+}
+
+entity Device {
+    id
+    type_id: DeviceType
+    house_id: House
+    serial_number
+    location
+    status
+}
+
+entity DeviceType {
+    id
+    type
+    protocol
+    protocol_version
+}
+
+entity TelemetryData {
+    id
+    device_id: Device
+    time
+    value
+}
+
+User "1"--"N" House 
+House "1"--"N" Device
+DeviceType "1"--"N" Device
+Device "1"--"N" TelemetryData
+
+
+@enduml

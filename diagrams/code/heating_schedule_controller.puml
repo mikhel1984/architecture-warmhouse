@@ -1,0 +1,32 @@
+@startuml heating_schedule_controller
+
+title Heating service schedule controller
+
+class ScheduleController {
+    + List<Schedule> schedule
+
+    + void addSchedule()
+    + Schedule getSchedule()
+}
+
+class Schedule {
+    + String address
+    + uint16 port 
+    List<ActivateTime> schedule
+    + Timer timer
+
+    + addTime(Date date, Time time, Duration duration)
+    + void pause()
+    + void reset()
+}
+
+class ActivateTime {
+    + Date date
+    + Time time
+    + Duration duration
+}
+
+ScheduleController "1" -- "0..*" Schedule : has
+Schedule "1" -- "0.." ActivateTime : has
+
+@enduml

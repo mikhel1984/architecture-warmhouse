@@ -1,0 +1,21 @@
+@startuml WarmHouse_context
+
+title WarmHouse monolithic context diagram 
+
+top to bottom direction
+
+'!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+!include <C4/C4_Container.puml>
+
+Person(user, "User", "A user of a WarmHouse system")
+Person(administrator, "Administrator", "Set up user connection into the system")
+
+System(WarmHouse, "WarmHouse system", "System managing temperature regulation and data reading")
+
+System_Ext(sensor, "Heating system", "Control temperature")
+
+Rel(user, WarmHouse, "Uses the system")
+Rel(administrator, WarmHouse, "Manages the connection")
+Rel(WarmHouse, sensor, "Control device")
+
+@enduml
